@@ -14,7 +14,9 @@
         <td class="px-4 py-2">{{ customer.phone }}</td>
         <td class="px-4 py-2">{{ customer.email }}</td>
         <td class="px-4 py-2">
-          <button class="mr-2 text-indigo-500 hover:underline">✏️</button>
+          <button @click="openEditModal(customer)" class="mr-2 text-indigo-500 hover:underline">
+            ✏️
+          </button>
           <button class="text-red-500 hover:underline">🗑️</button>
         </td>
       </tr>
@@ -24,4 +26,11 @@
 
 <script setup>
 defineProps(['customers'])
+
+const emit = defineEmits(['openEditModal'])
+
+function openEditModal(customer) {
+  console.log('Opening edit modal for:', customer)
+  emit('openEditModal', customer)
+}
 </script>
