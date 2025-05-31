@@ -4,8 +4,12 @@
       <h2 class="text-xl font-semibold mb-4">
         {{ isEditMode ? 'Update Contact Information' : 'Add New Contact Information' }}
       </h2>
-
-      <Form @submit="onSubmit" :validation-schema="schema" :initial-values="form">
+      <Form
+        :validation-schema="schema"
+        :initial-values="initialData"
+        @submit="onSubmit"
+        class="space-y-4"
+      >
         <div class="mb-4">
           <label for="username" class="block font-medium mb-1">Name</label>
           <Field name="username" v-slot="{ field, meta }">
@@ -73,7 +77,7 @@
 
 <script setup lang="ts">
 import { reactive, watch, defineEmits, defineProps } from 'vue'
-import { Form, Field, ErrorMessage } from 'vee-validate'
+import { Form, Field, ErrorMessage, ResetFormOpts } from 'vee-validate'
 import * as yup from 'yup'
 
 interface ContactForm {
@@ -143,9 +147,13 @@ const schema = yup.object({
   email: yup.string().required().email().label('Email address'),
 })
 
-function onSubmit(values) {
-  // Submit values to API...
-  alert(JSON.stringify(values, null, 2))
+const onSubmit = async (values) => {
+  try {
+    await emit('submit', values)
+    closeModal()
+  } catch (error) {
+    console.error('Submission error:', error)
+  }
 }
 
 function closeModal() {

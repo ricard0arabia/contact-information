@@ -11,7 +11,7 @@
     <tbody>
       <tr v-for="(customer, index) in customers" :key="index" class="border-t">
         <td class="px-4 py-2">{{ customer.username }}</td>
-        <td class="px-4 py-2">{{ customer.phone }}</td>
+        <td class="px-4 py-2">{{ customer.contactNumber }}</td>
         <td class="px-4 py-2">{{ customer.email }}</td>
         <td class="px-4 py-2">
           <button @click="openEditModal(customer)" class="mr-2 text-indigo-500 hover:underline">

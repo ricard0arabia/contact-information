@@ -2,7 +2,7 @@ import { request } from '@/utils/request.ts'
 // Remove the import if Tables types are declared globally in the .d.ts file
 // import type { Tables } from '@/types/tables.d.ts'
 
-/** 
+/**
  * Get table data
  * @param params Request parameters
  * @returns Table response data
@@ -12,7 +12,7 @@ export function getTableDataApi(params: Tables.TableRequestData) {
     url: 'tables',
     method: 'get',
     baseURL: '/json/server',
-    params
+    params,
   })
 }
 
@@ -25,7 +25,7 @@ export function getUserApi(id: number) {
   return request<Tables.User>({
     url: `tables/${id}`,
     method: 'get',
-    baseURL: '/json/server'
+    baseURL: '/json/server',
   })
 }
 
@@ -39,7 +39,7 @@ export function createUserApi(data: Omit<Tables.User, 'id'>) {
     url: 'tables',
     method: 'post',
     baseURL: '/json/server',
-    data
+    data,
   })
 }
 
@@ -50,11 +50,12 @@ export function createUserApi(data: Omit<Tables.User, 'id'>) {
  * @returns Updated user
  */
 export function updateUserApi(id: number, data: Partial<Tables.User>) {
+  console.log('Updating user with ID:', id, 'and data:', data)
   return request<Tables.User>({
     url: `tables/${id}`,
     method: 'put',
     baseURL: '/json/server',
-    data
+    data,
   })
 }
 
@@ -67,6 +68,6 @@ export function deleteUserApi(id: number) {
   return request<void>({
     url: `tables/${id}`,
     method: 'delete',
-    baseURL: '/json/server'
+    baseURL: '/json/server',
   })
 }

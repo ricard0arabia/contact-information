@@ -7,7 +7,7 @@
     >
       <div class="font-semibold text-lg">{{ customer.name }}</div>
       <div class="text-sm text-gray-600">{{ customer.email }}</div>
-      <div class="text-sm text-gray-600">{{ customer.phone }}</div>
+      <div class="text-sm text-gray-600">{{ customer.contactNumber }}</div>
       <div class="mt-2 flex space-x-2">
         <button class="text-indigo-500">✏️</button>
         <button class="text-red-500">🗑️</button>

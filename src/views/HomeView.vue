@@ -19,7 +19,7 @@
       :visible="showModal"
       :isEditMode="isEdit"
       :initialData="selectedContact"
-      @submit="handleSubmit"
+      @submit="handleSubmission"
       @close="handleClose"
     />
 
@@ -31,7 +31,7 @@
 import { ref, computed, onMounted } from 'vue'
 import TableView from './TableView.vue'
 import CardView from './CardView.vue'
-import { getTableDataApi } from '@@/apis/tables'
+import { getTableDataApi, updateUserApi } from '@@/apis/tables'
 import CustomerModal from '@/components/CustomerModal.vue'
 
 const view = ref('table')
@@ -39,7 +39,7 @@ const isLoading = ref(true)
 const error = ref(null)
 const customers = ref([])
 
-onMounted(async () => {
+const refreshList = async () => {
   try {
     const response = await getTableDataApi({
       _page: 1,
@@ -51,6 +51,10 @@ onMounted(async () => {
   } finally {
     isLoading.value = false
   }
+}
+
+onMounted(() => {
+  refreshList()
 })
 
 const currentView = computed(() => (view.value === 'table' ? TableView : CardView))
@@ -73,12 +77,19 @@ function openEditModal(contact) {
   console.log('Selected contact for edit:', contact)
 }
 
-function handleSubmit(data) {
+async function handleSubmission(data) {
   console.log('laman ng data', data)
-  if (isEdit.value) {
-    // update contact
-  } else {
-    // add contact
+  try {
+    if (isEdit.value) {
+      const response = await updateUserApi(data.id, data) // MUST be awaited
+      console.log('Updated contact:', response)
+      refreshList()
+    } else {
+      const response = await addUserApi(data) // if exists
+      console.log('Added contact:', response)
+    }
+  } catch (error) {
+    console.error('Submission failed:', error)
   }
 }
 

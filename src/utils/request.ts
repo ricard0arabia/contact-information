@@ -7,8 +7,8 @@ const service = axios.create({
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
-  }
+    Accept: 'application/json',
+  },
 })
 
 // Request interceptor
@@ -19,22 +19,24 @@ service.interceptors.request.use(
     // if (token) {
     //   config.headers.Authorization = `Bearer ${token}`
     // }
+    console.log('AXIOS FULL Request', config)
     return config
   },
   (error) => {
     return Promise.reject(error)
-  }
+  },
 )
 
 // Response interceptor
 service.interceptors.response.use(
   (response: AxiosResponse) => {
+    // console.log('AXIOS FULL response', JSON.stringify(response))
     return response.data
   },
   (error) => {
     // Handle errors
     return Promise.reject(error)
-  }
+  },
 )
 
 // Generic request function
